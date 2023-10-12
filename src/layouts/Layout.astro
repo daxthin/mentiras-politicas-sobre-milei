@@ -12,7 +12,7 @@ const { title } = Astro.props;
 		<meta name="description" content="Enterate de las mentiras que los medios intentan instalar para engañarte y que votes los gobiernos que ellos quieren para seguir viviendo de tus impuestos.">		
 		<meta name="viewport" content="width=device-width" />
 		<meta name="keywords" content="Milei, Javier Milei, Propuestas, Elecciones 2023, Derechos humanos, Reforma del estado, Reforma económica, Reforma laboral, Economia, venta de armas, venta de organos, Reducción de impuestos, tenencia de armas, seguridad, jubilaciones, crecimiento, capital humano, salud, libertad, liberalismo, libertarios, propuestas de milei, campaña, presidencia, presidente, argentina elecciones 2023, octubre 22, victoria villarruel">
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<link rel="icon" type="image/svg+xml" href="favicon.png" />
 		<link rel="preconnect" href="https://fonts.googleapis.com">
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 		<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;700&family=Kalam&family=Mohave:wght@300;400;500;700&display=swap" rel="stylesheet">
@@ -26,18 +26,19 @@ const { title } = Astro.props;
 <style is:global>
 	html, body {
 		margin: 0;
+		height: 100vh;
 		padding: 0;
 		font-family: 'Mohave';
 		font-size: 20px;
 	}
+
 	body {
-		background-color: #0f172a;
+		background-color: #131313;
 		color: rgb(219, 219, 219);
 		font-weight: 300;
 		display: flex;
-		flex-direction: row;
+		flex-direction: column;
 		height: 100vh;
-  		overflow: hidden;
 	}
 
 	main {
@@ -46,8 +47,6 @@ const { title } = Astro.props;
 		width: 100%;
 		height: 100vh;
 		overflow-y: hidden;
-		box-sizing: border-box;
-  		scroll-snap-type: y mandatory;
 		scroll-behavior: smooth;
 		transition: 500ms ease-in-out;
 	}
@@ -56,6 +55,22 @@ const { title } = Astro.props;
 		/* font-family: 'EB Garamond', serif; */
 		font-family: 'Mohave';
 		font-weight: 300;
+	}
+
+	.logo {
+		height: 100vh;
+		align-self: center;
+		justify-self: center;
+		width: 70vw;
+		position: absolute;
+		z-index: -20;
+		opacity: 0.7;
+	}
+
+	.separator {
+		background-color: rgba(255, 255, 255, 0.363);		
+		width: 1px;
+		height: 20px;
 	}
 
 	.section {
@@ -122,9 +137,10 @@ const { title } = Astro.props;
 	}
 
 	a {
-		color: #fa5252f5;
+		color: #ffd001f5;
 		text-decoration: none;
 		transition: 250ms ease-in-out;
+		text-transform: uppercase;
 		font-size: 18px;
 	}
 
@@ -134,7 +150,7 @@ const { title } = Astro.props;
 	}
 
 	.higher-accent-color {
-		color: #fa5252f5;
+		color: #ffd001f5;
 		font-style: normal;
 	}
 
@@ -147,10 +163,74 @@ const { title } = Astro.props;
 	}
 
 	.bg-style-one {
-		background-color: #0f172a;
+		background-color: #141414d8;
 	}
 	
 	.bg-style-two {
-		background-color: #182441;
+		background-color: #221f04d8;
+	}
+
+	@media only screen and (max-width: 1024px) {
+		.wrapper {
+			width: 60vw;
+		}
+
+		.logo {
+			height: 10vh;
+			margin-top: 20px;
+			align-self: center;
+			justify-self: center;
+			width: 80vw;
+			position: absolute;
+			z-index: -20;
+			opacity: 0.7;
+		}
+
+		.section p {
+		}
+
+		.section p {
+			font-size: 0.9rem;
+		}
+
+        ul li {
+            width: 0px;
+			height: 0px;
+			font-size: 0;
+        }
+
+		li::before {
+			font-size: 1rem;
+			margin-left: 0px;
+			margin-right: 0px;
+			color: gray;
+			content: '○';
+			transition: 250ms ease-in-out;
+		}
+
+		li.active::before {
+			font-size: 1rem;
+			margin-left: 0px;
+			margin-right: 0px;
+			color: white;
+			transition: 250ms ease-in-out;
+			content: '●';
+		}
+
+		.links {
+			position: fixed;
+			bottom: 15px;
+			align-self: center;
+			display: flex;
+			gap: 10px;
+		}
+
+		main {
+			scroll-snap-type: y mandatory;
+		}
+
+		.section {
+			scroll-snap-align: center;
+		}
 	}
 </style>

@@ -9,13 +9,14 @@ import List from '../components/List.astro';
 	<main id="main">
 		<div class="links">
 			<a href="https://milei2023.com.ar/">Fiscalizá</a>
+			<i class="separator"></i>
 			<a href="https://milei2023.com.ar/propuestas">Propuestas</a>
 		</div>
 		<!-- <h1 id="title">Los medios no te dicen la verdad sobre Milei</h1> -->
 		<Propuesta title="educación pública" bgColor="bg-style-one" index='0'>
 			<h1>"Milei quiere terminar con la educación pública"</h1>
 			<p>
-				<i class="higher-accent-color">No perderás el acceso gratis a la educación, esto es una mentira que los medios y los politicos quieren que creas</i>, con el sistema de vouchers el está refiriendose a cambiar la manera en que las escuelas reciben el dinero, la escuela en vez de recibir el dinero directamente del estado, se te dará a vos y como intermediario elegirás a que escuela darselo, ya sea una estatal (publica) o privada. Esto permitirá mejorar la calidad de educación debido a que las escuelas tendrán que competir para tener una buena reputación y la gente la vea con buenos ojos para decidir invertir el dinero en ella.
+				<i class="higher-accent-color">No perderás el acceso "gratis" a la educación, esto es una mentira que los medios y los politicos quieren que creas</i>, con el sistema de vouchers el está refiriendose a cambiar la manera en que las escuelas reciben el dinero, la escuela en vez de recibir el dinero directamente del estado, se te dará a vos y como intermediario elegirás a que escuela darselo, ya sea una estatal (publica) o privada. Esto permitirá mejorar la calidad de educación debido a que las escuelas tendrán que competir para tener una buena reputación y la gente la vea con buenos ojos para decidir invertir el dinero en ella.
 				<br>
 				<br>
 				<i class="lower-accent-color">
@@ -48,13 +49,23 @@ import List from '../components/List.astro';
 		<Propuesta title="venta de órganos" index='3' bgColor="bg-style-two">
 			<h1>"Milei quiere que vendas tus órganos"</h1>
 			<p>
-				Esto apareció cuando en una entrevista a Milei le hicieron una pregunta tramposa, la cual involucraba una discusión utopica o filosofica, pero el <i class="higher-accent-color">no está de acuerdo con la venta de organos, lo que el explica es que el sistema de donación está funcionando mal y debe ser mejorado para que sea más eficiente a la hora de necesitar un transplante u donación</i>.
+				Esto apareció en una entrevista a Milei en la que hicieron una pregunta tramposa, la cual involucraba una discusión utopica o filosofica, pero el <i class="higher-accent-color">no está de acuerdo con la venta de organos, lo que el explica es que el sistema de donación está funcionando mal y debe ser mejorado para que sea más eficiente a la hora de necesitar un transplante u donación</i>.
 				<br>
 				<br>
 				<i class="lower-accent-color">Por lo tanto, la supuesta propuesta de venta de organos no existe en su plan de gobierno fue una trampa por parte de los medios para intentar dejarlo mal parado, ya que si el contestaba que no estaba a favor dirían que es un "Falso liberal" y usarían eso para contradecirlo y ensuciar su imagen.</i>
 			</p>
 		</Propuesta>
+		<Propuesta title="Servicios Gratis" index='4' bgColor="bg-style-one">
+			<h1>"Con Milei se termina la Salud & Educación Gratuita"</h1>
+			<p>
+				No existe la educación ni la salud gratis, los politicos quieren que caígas en esta mentira para que los votes y ellos seguir viviendo de tu dinero. Pero en realidad <i class="higher-accent-color">lo que hoy en día conocemos como "Gratis" no lo es, ya que hóspitales, escuelas, planes etc. Son pagados con el fruto de tu trabajo a base de impuestos</i>, estos impuestos están incluidos en todo, comida, consumos electronicos, compras generales, compras en linea, la luz y demás.
+				<br>
+				<br>
+				<i class="lower-accent-color">No caígas en el verso de lo "Gratis", todo es pagado con tu dinero robado de los impuestos que pagás.</i>
+			</p>
+		</Propuesta>
 	</main>
+	<img class="logo" src="logo.svg" alt="">
 </Layout>
 
 <style>
@@ -88,17 +99,18 @@ import List from '../components/List.astro';
 			let y = Math.min(Math.max(e.deltaY, -1), 1);
 			scrollIndex += y;
 			scrollIndex = Math.min(Math.max(scrollIndex, 0), sections.length - 1);
-			
-			if(y === 1) {
-				sections[scrollIndex-1].classList.remove('active');
-				proposals_list.children[scrollIndex-1].classList.remove('active');
-			} else if (y === -1) {
-				proposals_list.children[scrollIndex+1].classList.remove('active');
-				sections[scrollIndex+1].classList.remove('active');
-			} 
+			console.log(scrollIndex);
+			// if(y === 1) {
+			// 	sections[scrollIndex-1].classList.remove('active');
+			// 	proposals_list.children[scrollIndex-1].classList.remove('active');
+			// } else if (y === -1) {
+			// 	proposals_list.children[scrollIndex+1].classList.remove('active');
+			// 	sections[scrollIndex+1].classList.remove('active');
+			// } 
 			GoTo(scrollIndex);
 		}, 30); 
 	})
+	
 
 	proposals_list.addEventListener('click', e => {
 		const items = document.querySelectorAll('.proposal_list_item');
@@ -113,11 +125,43 @@ import List from '../components/List.astro';
 	function GoTo(index){
 		if(sections[index]) {
 			main.scrollTop = sections[index].offsetTop;
-			sections[index].classList.add('active');
-			proposals_list.children[index].classList.add('active');
-			console.log(index);
+			// sections[index].classList.add('active');
+			// proposals_list.children[index].classList.add('active');
 		} 
 	}
+
+	function detectDeviceType() {
+		if (window.innerWidth > 1024) {
+			main.style.overflowY = 'hidden';
+		} else if (window.innerWidth <= 1024 && window.innerWidth > 768) {
+			main.style.overflowY = 'scroll';
+		} else {
+			main.style.overflowY = 'scroll';
+		}
+	}
+
+	const deviceType = detectDeviceType();
+	console.log("Device Type: " + deviceType);
+
+	// Create an observer with a custom threshold
+	const options = {
+		threshold: [0.5],
+	};
+
+	const observer = new IntersectionObserver(entries => {
+		entries.forEach(entry => {
+			if(entry.isIntersecting) {
+				proposals_list.querySelector(`[data-scroll-index="${entry.target.dataset.scrollIndex}"]`).classList.add('active');
+			} else {
+				proposals_list.querySelector(`[data-scroll-index="${entry.target.dataset.scrollIndex}"]`).classList.remove('active');
+			}
+		}) 
+	}, options);
+
+	sections.forEach(section => {
+		observer.observe(section);
+	})
+
 </script>
 
 
