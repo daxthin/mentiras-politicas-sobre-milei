@@ -1,0 +1,9 @@
+---
+const { title, index, bgColor } = Astro.props;
+---
+
+<section data-title={title} id={title.replaceAll(' ', '-')} data-scroll-index={index} class={"section " + bgColor}>
+    <div class="wrapper">
+        <slot />
+    </div>
+</section>

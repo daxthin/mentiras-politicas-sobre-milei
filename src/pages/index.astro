@@ -1,0 +1,123 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Propuesta from "../components/Propuesta.astro";
+import List from '../components/List.astro';
+---
+
+<Layout title="Lo que los medios no quieren que sepas de Milei">
+	<List></List>
+	<main id="main">
+		<div class="links">
+			<a href="https://milei2023.com.ar/">Fiscalizá</a>
+			<a href="https://milei2023.com.ar/propuestas">Propuestas</a>
+		</div>
+		<!-- <h1 id="title">Los medios no te dicen la verdad sobre Milei</h1> -->
+		<Propuesta title="educación pública" bgColor="bg-style-one" index='0'>
+			<h1>"Milei quiere terminar con la educación pública"</h1>
+			<p>
+				<i class="higher-accent-color">No perderás el acceso gratis a la educación, esto es una mentira que los medios y los politicos quieren que creas</i>, con el sistema de vouchers el está refiriendose a cambiar la manera en que las escuelas reciben el dinero, la escuela en vez de recibir el dinero directamente del estado, se te dará a vos y como intermediario elegirás a que escuela darselo, ya sea una estatal (publica) o privada. Esto permitirá mejorar la calidad de educación debido a que las escuelas tendrán que competir para tener una buena reputación y la gente la vea con buenos ojos para decidir invertir el dinero en ella.
+				<br>
+				<br>
+				<i class="lower-accent-color">
+					Los medios intentan instalar que el voucher no será suficiente para pagar, eso es otra mentira más para asustarte. 	
+				</i>
+			</p>
+		</Propuesta>
+		<Propuesta title="libre portación" bgColor="bg-style-two" index='1'>
+			<h1>"Milei quiere que todos anden con armas por las calles"</h1>
+			<p>
+				Esto es falso, pero seguramente escuchaste en los medios que en el gobierno de Milei existirá la Libre Portación de armas como en los Estados Unidos. Nadie podrá comprar un arma como si se tratase de caramelos, se plantea la idea de <i class="higher-accent-color">hacer cumplir la ley actual de tenencia de armas</i>, dónde para adquirir un arma se tienen que cumplir determinados requisitos y pruebas psicologicas. 
+				<br>
+				<br>
+				<i class="lower-accent-color">
+					La libre portación de armas es una mentira que han intentado instalar los medios de comunicación para que vos votes a los gobiernos que a ellos les conviene para seguir viviendo de tus impuestos. 	
+				</i>
+			</p>
+		</Propuesta>
+		<Propuesta title="salud pública" index='2' bgColor="bg-style-one">
+			<h1>"Milei quiere terminar con la salud pública"</h1>
+			<p>
+				Esta es otra mentira que han intentado instalar los medios de comunicación para asustarte y que votes al gobierno que a ellos les conviene, en realidad <i class="higher-accent-color">la salud seguirá siendo gratuita solamente que pasa a ser administrada por vouchers como con la educación</i>, esto te traerá beneficios porque podrás atenderte en el hospital que vos quieras y no estar obligado a un hospital mediocre porque no te alcance el dinero. 
+				<br>
+				<br>
+				<i class="lower-accent-color">
+					Los medios intentan instalar que el voucher no será suficiente para pagar, eso es otra mentira más para asustarte. 	
+				</i>
+			</p>
+		</Propuesta>
+		<Propuesta title="venta de órganos" index='3' bgColor="bg-style-two">
+			<h1>"Milei quiere que vendas tus órganos"</h1>
+			<p>
+				Esto apareció cuando en una entrevista a Milei le hicieron una pregunta tramposa, la cual involucraba una discusión utopica o filosofica, pero el <i class="higher-accent-color">no está de acuerdo con la venta de organos, lo que el explica es que el sistema de donación está funcionando mal y debe ser mejorado para que sea más eficiente a la hora de necesitar un transplante u donación</i>.
+				<br>
+				<br>
+				<i class="lower-accent-color">Por lo tanto, la supuesta propuesta de venta de organos no existe en su plan de gobierno fue una trampa por parte de los medios para intentar dejarlo mal parado, ya que si el contestaba que no estaba a favor dirían que es un "Falso liberal" y usarían eso para contradecirlo y ensuciar su imagen.</i>
+			</p>
+		</Propuesta>
+	</main>
+</Layout>
+
+<style>
+
+</style>
+
+<script>
+	const proposals_list = document.querySelector(".proposals-list");
+	
+	const sections = document.querySelectorAll(".section");
+	const main = document.getElementById("main");
+	
+	sections.forEach((section) => {
+		const list_item = document.createElement("li");
+		list_item.id = section.dataset.title.toLowerCase().replaceAll(' ', '-');
+		list_item.className = 'proposal_list_item';
+		list_item.textContent = section.dataset.title.toUpperCase();
+		list_item.dataset.scrollIndex = section.dataset.scrollIndex; 
+		proposals_list.appendChild(list_item);
+	});
+	
+	let scrollIndex = 0;
+	let scrollTimeout;
+	main.dataset.currentScrollIndex = `${scrollIndex}`;
+
+	window.addEventListener('wheel', (e)=> {
+		if (scrollTimeout) {
+    		clearTimeout(scrollTimeout);
+  		}
+		scrollTimeout = setTimeout(function () {
+			let y = Math.min(Math.max(e.deltaY, -1), 1);
+			scrollIndex += y;
+			scrollIndex = Math.min(Math.max(scrollIndex, 0), sections.length - 1);
+			
+			if(y === 1) {
+				sections[scrollIndex-1].classList.remove('active');
+				proposals_list.children[scrollIndex-1].classList.remove('active');
+			} else if (y === -1) {
+				proposals_list.children[scrollIndex+1].classList.remove('active');
+				sections[scrollIndex+1].classList.remove('active');
+			} 
+			GoTo(scrollIndex);
+		}, 30); 
+	})
+
+	proposals_list.addEventListener('click', e => {
+		const items = document.querySelectorAll('.proposal_list_item');
+		if(e.target.className.includes('proposal_list_item')) {
+			items.forEach(item => item.classList.remove('active'));
+			e.target.classList.add('active');
+			scrollIndex = parseInt(e.target.dataset.scrollIndex);
+			GoTo(parseInt(e.target.dataset.scrollIndex));
+		}
+	})
+
+	function GoTo(index){
+		if(sections[index]) {
+			main.scrollTop = sections[index].offsetTop;
+			sections[index].classList.add('active');
+			proposals_list.children[index].classList.add('active');
+			console.log(index);
+		} 
+	}
+</script>
+
+
